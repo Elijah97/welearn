@@ -26,17 +26,17 @@ Route::get('/', [AuthController::class, 'index']);
 Route::get('/login', [AuthController::class, 'viewLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::get('/', [AuthController::class, 'index']);
-Route::get('/123ABCXYZ', [AuthController::class, 'viewRegister'])->name('register');
-Route::post('/123ABCXYZ', [AuthController::class, 'adminRegister'])->name('register');
+Route::get('/signup', [AuthController::class, 'viewRegister'])->name('register');
+Route::post('/signup', [AuthController::class, 'adminRegister'])->name('register');
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // Dashboard Routes
 Route::get('/home', [HomeController::class, 'index'])->name('home');
-Route::post('/addMedicine', [HomeController::class, 'addMedicine'])->name('medicine');
-Route::get('/medPending/{id}', [HomeController::class, 'medPending'])->name('medicine');
-Route::get('/medPlay/{id}', [HomeController::class, 'medPlay'])->name('medicine');
-Route::get('/medDelete/{id}', [HomeController::class, 'medDelete'])->name('medicine');
-Route::get('/medDetails/{id}', [HomeController::class, 'medDetails'])->name('medicine');
+Route::post('/addContent', [HomeController::class, 'addContent'])->name('content');
+Route::get('/contentPending/{id}', [HomeController::class, 'contentPending'])->name('content');
+Route::get('/contentPlay/{id}', [HomeController::class, 'contentPlay'])->name('content');
+Route::get('/contentDelete/{id}', [HomeController::class, 'contentDelete'])->name('content');
+Route::get('/contentDetails/{id}', [HomeController::class, 'contentDetails'])->name('content');
 
 
 Route::get('/admin', [HomeController::class, 'getAdmin'])->name('admin');

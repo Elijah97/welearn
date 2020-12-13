@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Medicine;
+use App\Models\Content;
 use Illuminate\Http\Request;
 
 use Validator;
@@ -28,87 +28,88 @@ class HomeController extends Controller
     {
 
 
-        $medicines = DB::table('medicines')
-            ->select('medicines.*')
+        $contents = DB::table('contents')
+            ->select('contents.*')
             ->get();
-        return view('dashboard.home', ['medicines' => $medicines]);
+        return view('dashboard.home', ['contents' => $contents]);
     }
 
-    public function addMedicine(Request $request)
+    public function addContent(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|min:3',
-            'qty' => 'required|min:0',
             'desc' => 'required|min:0',
-            'origin' => 'required|min:3',
-            'pic' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            'content' => 'required|min:0',
+            'link1' => 'min:3',
+            'link2' => 'min:3',
         ]);
         if ($validator->fails()) {
             return redirect('/home')->withErrors($validator)->withInput();
         } else {
-            $image = $request->file('pic');
-            $name = time() . '.' . $image->getClientOriginalExtension();
-            $destinationPath = public_path('/medicinePictures');
-            $image->move($destinationPath, $name);
+            $file = $request->file('file');
+            $name = time() . '.' . $file->getClientOriginalExtension();
+            $destinationPath = public_path('/contentFiles');
+            $file->move($destinationPath, $name);
 
-            $home = new Medicine;
+            $home = new Content;
             $home->name = $request->input('name');
-            $home->qty = $request->input('qty');
             $home->description = $request->input('desc');
-            $home->origin = $request->input('origin');
+            $home->content = $request->input('content');
+            $home->link1 = $request->input('link1');
+            $home->link2 = $request->input('link2');
+            $home->file = $name;
             $home->status = 1;
-            $home->picture = $name;
 
             $home->save();
-            return redirect('/home')->with('success', 'Drug succesfully registered');
+            return redirect('/home')->with('success', 'Content succesfully added');
         }
     }
 
-    public function medPending($id)
+    public function contentPending($id)
     {
-        $pend = DB::update("UPDATE medicines SET status = 0 WHERE id = '$id' ");
+        $pend = DB::update("UPDATE contents SET status = 0 WHERE id = '$id' ");
         if ($pend) {
-            return redirect('/home')->with('success', 'Drug successfully suspended');
+            return redirect('/home')->with('success', 'Content successfully suspended');
         } else {
 
             return ("asshole Pending");
         }
     }
 
-    public function medPlay($id)
+    public function contentPlay($id)
     {
-        $play = DB::update("UPDATE medicines SET status = 1 WHERE id = '$id' ");
+        $play = DB::update("UPDATE contents SET status = 1 WHERE id = '$id' ");
         if ($play) {
-            return redirect('/home')->with('success', 'Drug successfully activated');
+            return redirect('/home')->with('success', 'Content successfully activated');
         } else {
 
             return ("asshole Playing");
         }
     }
 
-    public function medDelete($id)
+    public function contentDelete($id)
     {
-        $delete = DB::delete("DELETE FROM medicines WHERE id = '$id' ");
+        $delete = DB::delete("DELETE FROM content WHERE id = '$id' ");
         if ($delete) {
-            return redirect('/home')->with('success', 'Drug successfully deleted');
+            return redirect('/home')->with('success', 'Content successfully deleted');
         } else {
 
             return ("asshole Playing");
         }
     }
 
-    public function medDetails($id)
+    public function contentDetails($id)
     {
-        $medicine = DB::table('medicines')
-            ->select('medicines.*')
+        $content = DB::table('contents')
+            ->select('contents.*')
             ->where('id', '=', $id)
             ->get();
 
-        $medicines = DB::table('medicines')
-            ->select('medicines.*')
+        $contents = DB::table('contents')
+            ->select('contents.*')
             ->where('id', '!=', $id)
             ->get();
-        return view('dashboard.details', ['medicine' => $medicine, 'medicines' => $medicines]);
+        return view('dashboard.details', ['content' => $content, 'contents' => $contents]);
     }
 
 

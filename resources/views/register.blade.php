@@ -1,77 +1,63 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
-
-                <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
-                        @csrf
-
-                        <div class="form-group row">
-                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
-
-                                @error('name')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
-
-                                @error('email')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-
-                                @error('password')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                            </div>
-                        </div>
-
-                        <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Register') }}
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+<div class="register-photo">
+    <div class="form-container">
+        <form method="POST" action="{{ route('register') }}">
+            @csrf
+            <h2 class="text-center" style="color: #56c6c6;"><strong>welearn</strong></h2>
+            <div class="form-group">
+                <label for="password" class="col-md-12 col-form-label">Names</label>
+                <input class="form-control" type="text" name="name" placeholder="Your name" required=""></div>
+            @error('name')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+            @enderror
+            <div class="form-group">
+                <label for="password" class="col-md-12 col-form-label">Email</label>
+                <input class="form-control" type="email" name="email" placeholder="Email"></div>
+            @error('email')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+            @enderror
+            <div class="form-group">
+                <label for="password" class="col-md-12 col-form-label">Role</label>
+                <select name="role" class="form-control">
+                    <option value="99">Teacher</option>
+                    <option value="1">Student</option>
+                </select>
             </div>
-        </div>
+            <div class="form-group">
+                <label for="password" class="col-md-12 col-form-label">Course</label>
+                <select name="course" class="form-control">
+                    <option value="Human Centerd Design">Human Centerd Design</option>
+                    <option value="Computing Research">Computing Research</option>
+                    <option value="Advanced Algorithm">Advanced Algorithm</option>
+                    <option value="Security">Security</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="password" class="col-md-12 col-form-label">Gender</label>
+                <select name="gender" class="form-control">
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="password" class="col-md-12 col-form-label">Password</label>
+                <input class="form-control" type="password" name="password" placeholder="Password"></div>
+            @error('password')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+            @enderror
+            <div class="form-group">
+                <div class="form-check"><label class="form-check-label"><input class="form-check-input" type="checkbox" required>I agree to the license terms.</label></div>
+            </div>
+            <div class="form-group"><button class="btn btn-primary btn-block btn-sm" type="submit" style="background: #56c6c6;">Sign Up</button></div><a class="already" href="/login">You already have an account? Login here.</a>
+        </form>
     </div>
 </div>
 @endsection

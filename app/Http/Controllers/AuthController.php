@@ -25,10 +25,11 @@ class AuthController extends Controller
      */
     public function index()
     {
-        $medicines = DB::table('medicines')
-            ->select('medicines.*')
-            ->get();
-        return view('index', ['medicines' => $medicines]);
+        // $medicines = DB::table('medicines')
+        //     ->select('medicines.*')
+        //     ->get();
+        // return view('index', ['medicines' => $medicines]);
+        return view('index');
     }
 
     public function viewLogin()
@@ -46,6 +47,9 @@ class AuthController extends Controller
         $rules = array(
             'name' => 'required|min:6|max:255',
             'email' => 'required|min:6|max:255|email|unique:users',
+            'course' => 'required',
+            'role' => 'required',
+            'gender' => 'required',
             'password' => 'required|min:6|regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$#%]).*$/|max:255'
         );
         $validator = $request->validate($rules);
@@ -57,7 +61,9 @@ class AuthController extends Controller
             $user->email = $request->input('email');
             $user->password = bcrypt($request->input('password'));
             $user->status = 1;
-            $user->role = 99;
+            $user->role = $request->input('role');
+            $user->course = $request->input('course');
+            $user->gender = $request->input('gender');;
             $user->save();
             return redirect('/')->with('success', 'Success; Account created successfully.');
         }
